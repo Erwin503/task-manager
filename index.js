@@ -1,7 +1,7 @@
 const express = require("express");
 const sequelize = require("./db");
 const models = require("./models/models");
-// const router = require("./routes/index");
+const router = require("./routes/index");
 const cors = require("cors");
 const cokieParser = require("cookie-parser");
 const morgan = require("morgan");
@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 app.use(cokieParser());
 app.use(express.json());
 app.use(cors());
-// app.use("/api", router);
+app.use("/api", router);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
