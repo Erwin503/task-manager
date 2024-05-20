@@ -41,7 +41,6 @@ const Topic = sequelize.define("Topic", {
   name: {
     type: DataTypes.STRING(200),
     allowNull: false,
-    unique: true,
   },
   description: {
     type: DataTypes.STRING(1000),
@@ -58,7 +57,6 @@ const Task = sequelize.define("Task", {
   name: {
     type: DataTypes.STRING(200),
     allowNull: false,
-    unique: true,
   },
   text: {
     type: DataTypes.STRING(1000),
@@ -79,7 +77,6 @@ const Test = sequelize.define("Test", {
   name: {
     type: DataTypes.STRING(200),
     allowNull: false,
-    unique: true,
   },
   text: {
     type: DataTypes.STRING(1000),
@@ -97,7 +94,7 @@ const TestAnswer = sequelize.define("testAnswer", {
     type: DataTypes.STRING(1000),
     allowNull: false,
   },
-  isCorret: {
+  isCorrect: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },

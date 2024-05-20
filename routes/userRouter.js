@@ -8,7 +8,7 @@ const verifyJWT = require('../middleware/verifyJWT')
 const userController = require('../controllers/user/userController')
 
 router.post("/registration", RegisterController.create);
-router.post("/auth", AuthController.handleLogin);
+router.post("/login", AuthController.handleLogin);
 router.get("/refresh", RefreshTokenController.handleRefreshToken);
 router.get("/logout", LogoutController.handleLogout);
 router.put("/update", verifyJWT, userController.update);

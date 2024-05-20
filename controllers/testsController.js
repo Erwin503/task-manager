@@ -1,4 +1,4 @@
-const { Test, TestAnswer } = require('../models/models');
+const { Test, TestAnswer, Topic } = require('../models/models');
 
 // Получение всех тестов с ответами
 const getTests = async (req, res) => {
@@ -16,11 +16,16 @@ const getTests = async (req, res) => {
     }
 };
 
-// Создание нового теста с ответами
+// Создание нового теста с ответами и привязкой к теме
 const createTest = async (req, res) => {
-    const { name, text, answers } = req.body;
+    const { name, text, answers, topicId } = req.body;
     try {
-        const test = await Test.create({ name, text });
+        const topic = await Topic.findByPk(topicId);
+        if (!topic) {
+            return res.status(404).json({ data: null, message: "Topic not found" });
+        }
+
+        const test = await Test.create({ name, text, topicId });
 
         let correctAnswerCount = 0;
         for (let answer of answers) {
