@@ -69,7 +69,9 @@ const deleteTopic = async (req, res) => {
 // Получение тем, созданных пользователем по userId
 const getTopicsByUser = async (req, res) => {
   try {
-    const topics = await Topic.findAll({ where: { userId: req.user.id } });
+    const topics = await Topic.findAll({
+      where: { userId: req.params.userId },
+    });
     res.json({
       data: topics,
       message: "Topics for user retrieved successfully",
@@ -78,6 +80,8 @@ const getTopicsByUser = async (req, res) => {
     res.status(500).json({ data: null, message: error.message });
   }
 };
+
+
 
 module.exports = {
   getTopics,

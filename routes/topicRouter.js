@@ -24,11 +24,6 @@ router.delete(
   checkRole("Teacher"),
   topicsController.deleteTopic
 );
-router.get(
-  "/user",
-  authenticate,
-  checkRole("Teacher"),
-  topicsController.getTopicsByUser
-);
+router.get("/user", topicsController.getTopicsByUser);
 
 module.exports = router;
