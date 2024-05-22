@@ -88,13 +88,33 @@ const checkTaskAnswer = async (req, res) => {
     const task = await Task.findByPk(req.params.id);
     if (task) {
       const isCorrect = task.answer === req.body.answer;
-      res.json({
-        data: { isCorrect },
-        message: isCorrect ? "Answer is correct" : "Answer is incorrect",
-      });
+      if (isCorrect) {
+        res.json({ data: { isCorrect }, message: "Answer is correct" });
+      } else {
+        res.json({
+          data: { isCorrect, correctAnswer: task.answer },
+          message: "Answer is incorrect",
+        });
+      }
     } else {
       res.status(404).json({ data: null, message: "Task not found" });
     }
+  } catch (error) {
+    res.status(500).json({ data: null, message: error.message });
+  }
+};
+
+const getTasksByUser = async (req, res) => {
+  try {
+    const tasks = await Task.findAll({
+      include: {
+        model: Topic,
+        where: { userId: req.user.id },
+        attributes: [],
+      },
+      attributes: ["id", "text"],
+    });
+    res.json({ data: tasks, message: "Tasks for user retrieved successfully" });
   } catch (error) {
     res.status(500).json({ data: null, message: error.message });
   }
@@ -108,4 +128,5 @@ module.exports = {
   deleteTask,
   getTasksByTopic,
   checkTaskAnswer,
+  getTasksByUser,
 };
